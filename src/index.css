@@ -1,3 +1,83 @@
+:root {
+  --main-primary-color: #6CF;
+  --main-secondary-color: #145;
+  --main-secondary-color-hint: #168;
+  --main-error-color: #D44;
+}
+
 body {
   margin: 0;
+  background-color: var(--main-secondary-color);
+  color: var(--main-primary-color)
+}
+
+[role="tablist"] {
+  margin: 8px;
+  justify-self: center;
+  width: 100%;
+  height: 48px;
+  border-bottom: 2px solid var(--main-secondary-color-hint);
+}
+
+.primary-tabs {
+  justify-self: center;
+}
+
+.secondary-tabs {
+  justify-self: right;
+}
+
+[role="tab"] {
+  transition: 0.1s;
+  border: none;
+  border-radius: 8px;
+  gap: 8px;
+  padding: 8px;
+}
+[role="tab"]:hover {
+  transition: 0.1s;
+  background-color: var(--main-secondary-color-hint);
+  color: white;
+}
+
+[role="tab"][aria-selected="true"] {
+  transition: 0.1s;
+  background-color: var(--main-primary-color);
+  color: var(--main-secondary-color);
+}
+[role="tab"][aria-selected="true"]:hover {
+  transition: 0.1s;
+  background-color: white;
+}
+
+[role="tabpanel"] {
+  margin: 8px;
+}
+
+button {
+  transition: 0.1s;
+  border: 2px solid var(--main-primary-color);
+  border-radius: 4px;
+  padding: 8px;
+  color: var(--main-primary-color);
+  background-color: #145;
+}
+button:hover {
+  transition: 0.1s;
+  background-color: var(--main-primary-color);
+  color: var(--main-secondary-color);
+}
+
+select {
+  border: 2px solid var(--main-primary-color);
+  border-radius: 4px;
+  background-color: var(--main-secondary-color-hint);
+  color: var(--main-primary-color);
+  padding: 4px;
+  width: 100px;
+}
+
+input[type="checkbox"] {
+  border: 2px solid var(--main-primary-color);
+  border-radius: 4px;
 }
