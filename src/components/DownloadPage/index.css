@@ -1,0 +1,45 @@
+.download-input {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    gap: 8px;
+}
+
+.download-options {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-self: center;
+    margin-top: 32px;
+}
+.download-option {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.url-input {
+    transition: 0.1s;
+    width: 400px;
+    border: 2px solid var(--main-primary-color);
+    border-radius: 4px;
+    background-color: var(--main-secondary-color);
+    color: var(--main-primary-color);
+    padding: 8px;
+}
+.url-input::placeholder {
+    color: var(--main-primary-color);
+}
+.url-input:focus {
+    transition: 0.1s;
+    border: 2px solid white;
+    background-color: var(--main-secondary-color-hint);
+}
+
+.url-error-status {
+    margin: -2px;
+    margin-left: 0px;
+    color: var(--main-error-color);
+    font-weight: bold;
+}
