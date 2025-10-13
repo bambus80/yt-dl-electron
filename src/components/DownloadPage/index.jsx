@@ -8,20 +8,27 @@ const DownloadPage = () => {
   const [quality, setQuality] = useState("best");
   const [audioOnly, setAudioOnly] = useState(false);
 
-  const download = () => {
-    console.log(quality, audioOnly)
+  const download = async () => {
+    console.log(quality, audioOnly);
     if (!url) {
       setError("Please enter a YouTube URL.");
       return;
     }
     const ytRegex =
       /(?:youtube\.com\/(?:.*v=|v\/|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/;
-    const match = url.match(ytRegex);
-    if (!match) {
+    const videoId = url.match(ytRegex);
+    if (!videoId) {
       setError("Please enter a valid YouTube URL.");
       return;
     }
-    // TODO: Pass to yt-dlp
+
+    const process = await window.yt.startDownload(
+      videoId,
+      quality,
+      "webm",
+      audioOnly
+    );
+    console.log(process);
   };
 
   const videoQualityOptions = {
@@ -37,11 +44,11 @@ const DownloadPage = () => {
   };
 
   const videoFormatOptions = {
-    "default": "Default",
-    "webm": "WebM",
-    "mp4": "MP4",
-    "mkv": "MKV"
-  }
+    default: "Default",
+    webm: "WebM",
+    mp4: "MP4",
+    mkv: "MKV",
+  };
 
   return (
     <>
