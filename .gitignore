@@ -90,3 +90,9 @@ typings/
 
 # Electron-Forge
 out/
+
+# Videos
+*.mp4
+*.webm
+*.mkv
+youtu.be/
