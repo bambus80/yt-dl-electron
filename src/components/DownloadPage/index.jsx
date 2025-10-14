@@ -114,19 +114,21 @@ const DownloadPage = () => {
             onChange={(e) => setAudioOnly(e.target.checked)}
           />
         </div>
-        <div className="download-option">
-          <label htmlFor="quality-setting">Quality</label>
-          <select
-            name="quality-setting"
-            onChange={(e) => setQuality(e.target.value)}
-          >
-            {Object.keys(videoQualityOptions).map((key, index) => (
-              <option key={index} value={key}>
-                {videoQualityOptions[key]}
-              </option>
-            ))}
-          </select>
-        </div>
+        {!audioOnly && (
+          <div className="download-option">
+            <label htmlFor="quality-setting">Quality</label>
+            <select
+              name="quality-setting"
+              onChange={(e) => setQuality(e.target.value)}
+            >
+              {Object.keys(videoQualityOptions).map((key, index) => (
+                <option key={index} value={key}>
+                  {videoQualityOptions[key]}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
         <div className="download-option">
           <label htmlFor="format-setting">Format</label>
           <select
