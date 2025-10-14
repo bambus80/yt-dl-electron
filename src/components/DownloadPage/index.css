@@ -43,6 +43,7 @@
 }
 
 .url-error-status {
+    width: 400px;
     margin: -2px;
     margin-left: 0px;
     color: var(--main-error-color);

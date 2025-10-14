@@ -9,6 +9,11 @@ const DownloadPage = () => {
     window.yt.onDone((code) => {
       setIsDownloading(false);
     });
+    window.yt.onError((error) => {
+      setProgress(null);
+      setIsDownloading(false);
+      setError(error.message);
+    });
   }, []);
 
   const [error, setError] = useState(null);
@@ -16,8 +21,13 @@ const DownloadPage = () => {
   const [isDownloading, setIsDownloading] = useState(false);
   const [url, setUrl] = useState(null);
 
+  const [format, setFormat] = useState("default");
   const [quality, setQuality] = useState("best");
   const [audioOnly, setAudioOnly] = useState(false);
+
+  useEffect(() => {
+    audioOnly ? setFormat("mp3") : setFormat("default");
+  }, [audioOnly]);
 
   const handleDownload = async () => {
     console.log(quality, audioOnly);
@@ -36,7 +46,7 @@ const DownloadPage = () => {
     const result = await window.yt.startDownload(
       videoId,
       quality,
-      "webm",
+      format,
       audioOnly
     );
     setIsDownloading(true);
@@ -61,6 +71,13 @@ const DownloadPage = () => {
     mkv: "MKV",
   };
 
+  const audioFormatOptions = {
+    mp3: "MP3",
+    wav: "Wav",
+    flac: "FLAC",
+    aac: "AAC",
+  };
+
   return (
     <>
       <div className="download-input">
@@ -80,7 +97,11 @@ const DownloadPage = () => {
           </p>
         )}
         {error && <p className="url-error-status">{error}</p>}
-        <button className="download-button" disabled={isDownloading} onClick={() => handleDownload()}>
+        <button
+          className="download-button"
+          disabled={isDownloading}
+          onClick={() => handleDownload()}
+        >
           Download
         </button>
       </div>
@@ -110,11 +131,13 @@ const DownloadPage = () => {
           <label htmlFor="format-setting">Format</label>
           <select
             name="format-setting"
-            onChange={(e) => setQuality(e.target.value)}
+            onChange={(e) => setFormat(e.target.value)}
           >
-            {Object.keys(videoFormatOptions).map((key, index) => (
+            {Object.keys(
+              audioOnly ? audioFormatOptions : videoFormatOptions
+            ).map((key, index) => (
               <option key={index} value={key}>
-                {videoFormatOptions[key]}
+                {audioOnly ? audioFormatOptions[key] : videoFormatOptions[key]}
               </option>
             ))}
           </select>
