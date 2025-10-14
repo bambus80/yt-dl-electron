@@ -1,14 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./index.css";
 
 const DownloadPage = () => {
+  useEffect(() => {
+    window.yt.onProgress((msg) => {
+      setProgress(msg);
+    });
+    window.yt.onDone((code) => {
+      setIsDownloading(false);
+    });
+  }, []);
+
   const [error, setError] = useState(null);
+  const [progress, setProgress] = useState(null);
+  const [isDownloading, setIsDownloading] = useState(false);
   const [url, setUrl] = useState(null);
 
   const [quality, setQuality] = useState("best");
   const [audioOnly, setAudioOnly] = useState(false);
 
-  const download = async () => {
+  const handleDownload = async () => {
     console.log(quality, audioOnly);
     if (!url) {
       setError("Please enter a YouTube URL.");
@@ -16,19 +27,19 @@ const DownloadPage = () => {
     }
     const ytRegex =
       /(?:youtube\.com\/(?:.*v=|v\/|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/;
-    const videoId = url.match(ytRegex);
+    const videoId = url.match(ytRegex)[1];
     if (!videoId) {
       setError("Please enter a valid YouTube URL.");
       return;
     }
 
-    const process = await window.yt.startDownload(
+    const result = await window.yt.startDownload(
       videoId,
       quality,
       "webm",
       audioOnly
     );
-    console.log(process);
+    setIsDownloading(true);
   };
 
   const videoQualityOptions = {
@@ -63,8 +74,15 @@ const DownloadPage = () => {
             setUrl(e.target.value);
           }}
         />
+        {isDownloading && (
+          <p className="download-status">
+            {progress ? `${progress.percent}% done` : "Starting download..."}
+          </p>
+        )}
         {error && <p className="url-error-status">{error}</p>}
-        <button onClick={() => download()}>Download</button>
+        <button className="download-button" disabled={isDownloading} onClick={() => handleDownload()}>
+          Download
+        </button>
       </div>
       <div className="download-options">
         <div className="download-option">

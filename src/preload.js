@@ -5,4 +5,7 @@ contextBridge.exposeInMainWorld("yt", {
     ipcRenderer.invoke("yt:startDownload", id, quality, format, audioOnly),
   getVideoInfo: (id) => ipcRenderer.invoke("yt:getVideoInfo", id),
   getYtDlpInfo: () => ipcRenderer.invoke("yt:getYtDlpInfo"),
+
+  onProgress: (callback) => ipcRenderer.on("yt:downloadProgress", (_event, data) => callback(data)),
+  onDone: (callback) => ipcRenderer.on("yt:downloadDone", (_event, data) => callback(data)),
 });

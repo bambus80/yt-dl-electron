@@ -4,6 +4,11 @@
     justify-self: center;
     gap: 8px;
 }
+.download-button:disabled {
+    transition: 0.1s;
+    opacity: 0.3;
+    pointer-events: none;
+}
 
 .download-options {
     display: flex;
@@ -42,4 +47,8 @@
     margin-left: 0px;
     color: var(--main-error-color);
     font-weight: bold;
+}
+.download-status {
+    margin: -2px;
+    margin-left: 0px;
 }
