@@ -30,11 +30,11 @@ const DownloadPage = () => {
   }, [audioOnly]);
 
   const handleDownload = async () => {
-    console.log(quality, audioOnly);
     if (!url) {
       setError("Please enter a YouTube URL.");
       return;
     }
+    setError(null);
     const ytRegex =
       /(?:youtube\.com\/(?:.*v=|v\/|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/;
     const videoId = url.match(ytRegex)[1];
