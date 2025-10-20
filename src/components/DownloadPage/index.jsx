@@ -60,7 +60,7 @@ const DownloadPage = () => {
   };
 
   const videoQualityOptions = {
-    best: "Highest",
+    0: "Highest",
     2160: "4K 2160p",
     1440: "HD 1440p",
     1080: "HD 1080p",

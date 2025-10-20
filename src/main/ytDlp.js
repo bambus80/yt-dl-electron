@@ -11,6 +11,7 @@ ipcMain.handle(
     console.log("yt-dlp start download");
     let error = null;
     // Base args
+    if (format === 0) format = "best";
     let args = [
       `https://www.youtube.com/watch?v=${id}`,
       "-f",
