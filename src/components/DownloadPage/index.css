@@ -4,6 +4,13 @@
     justify-self: center;
     gap: 8px;
 }
+.download-button {
+    width: 100%;
+}
+.download-button-container {
+    display: flex;
+    gap: 8px;
+}
 .download-button:disabled {
     transition: 0.1s;
     opacity: 0.3;

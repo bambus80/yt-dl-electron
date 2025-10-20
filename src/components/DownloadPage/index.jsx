@@ -19,6 +19,7 @@ const DownloadPage = () => {
   const [error, setError] = useState(null);
   const [progress, setProgress] = useState(null);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [saveMode, setSaveMode] = useState("file");
   const [url, setUrl] = useState(null);
 
   const [format, setFormat] = useState("default");
@@ -43,13 +44,19 @@ const DownloadPage = () => {
       return;
     }
 
+    setIsDownloading(true);
     const result = await window.yt.startDownload(
       videoId,
       quality,
       format,
-      audioOnly
+      audioOnly,
+      saveMode
     );
-    setIsDownloading(true);
+  };
+
+  const saveOptions = {
+    file: "File",
+    library: "To library",
   };
 
   const videoQualityOptions = {
@@ -97,13 +104,25 @@ const DownloadPage = () => {
           </p>
         )}
         {error && <p className="url-error-status">{error}</p>}
-        <button
-          className="download-button"
-          disabled={isDownloading}
-          onClick={() => handleDownload()}
-        >
-          Download
-        </button>
+        <div className="download-button-container">
+          <button
+            className="download-button"
+            disabled={isDownloading}
+            onClick={() => handleDownload()}
+          >
+            Download
+          </button>
+          <select
+            name="save-setting"
+            onChange={(e) => setSaveMode(e.target.value)}
+          >
+            {Object.keys(saveOptions).map((key, index) => (
+              <option key={index} value={key}>
+                {saveOptions[key]}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       <div className="download-options">
         <div className="download-option">
