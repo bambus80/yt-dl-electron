@@ -91,6 +91,9 @@ typings/
 # Electron-Forge
 out/
 
+# Downloaded binaries
+bin/
+
 # Videos + audio
 *.mp4
 *.webm

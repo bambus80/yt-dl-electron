@@ -1,9 +1,16 @@
 import { ipcMain, dialog } from "electron";
 import { mainWindow } from "../main";
-import { path } from "path";
 import YTDlpWrap from "yt-dlp-wrap";
+const path = require("node:path");
 
 const ytDlpWrap = new YTDlpWrap();
+
+// Use binary path provided during build
+ytDlpWrap.setBinaryPath(
+  process.platform === "win32"
+    ? path.resolve("./bin/yt-dlp.exe")
+    : path.resolve("./bin/yt-dlp")
+);
 
 ipcMain.handle(
   "yt:startDownload",
