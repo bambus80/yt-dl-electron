@@ -9,6 +9,9 @@ module.exports = {
       process.platform === "win32"
         ? path.resolve("./bin/yt-dlp.exe")
         : path.resolve("./bin/yt-dlp"),
+      process.platform === "win32"
+        ? path.resolve("./bin/ffmpeg.exe")
+        : path.resolve("./bin/ffmpeg"),
     ],
   },
   rebuildConfig: {},

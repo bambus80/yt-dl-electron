@@ -1,16 +1,18 @@
-import { ipcMain, dialog } from "electron";
+import { app, ipcMain, dialog } from "electron";
 import { mainWindow } from "../main";
 import YTDlpWrap from "yt-dlp-wrap";
 const path = require("node:path");
 
-const ytDlpWrap = new YTDlpWrap();
+const isDev = !app.isPackaged;
+const ytDlpPath = isDev
+  ? path.join(__dirname, "../../bin", process.platform === "win32" ? "yt-dlp.exe" : "yt-dlp")
+  : path.join(process.resourcesPath, process.platform === "win32" ? "yt-dlp.exe" : "yt-dlp");
+const ffmpegPath = isDev
+  ? path.join(__dirname, "../../bin", process.platform === "win32" ? "ffmpeg.exe" : "ffmpeg")
+  : path.join(process.resourcesPath, process.platform === "win32" ? "ffmpeg.exe" : "ffmpeg");
 
-// Use binary path provided during build
-ytDlpWrap.setBinaryPath(
-  process.platform === "win32"
-    ? path.resolve("./bin/yt-dlp.exe")
-    : path.resolve("./bin/yt-dlp")
-);
+const ytDlpWrap = new YTDlpWrap();
+ytDlpWrap.setBinaryPath(ytDlpPath);
 
 ipcMain.handle(
   "yt:startDownload",
@@ -53,6 +55,8 @@ ipcMain.handle(
       error = "Invalid save option";
       // args = [...args, "-o", "%(id)s.%(ext)s"];
     }
+    // Use bundled FFmpeg binary
+    args = [...args, "--ffmpeg-location", ffmpegPath]; 
 
     console.log("yt-dlp flags:", args);
 

@@ -7,8 +7,8 @@
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "download-deps": "node scripts/get-yt-dlp.js",
-    "build": "node scripts/get-yt-dlp.js && electron-forge package",
+    "download-deps": "node scripts/get-deps.js",
+    "build": "node scripts/get-deps.js && electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\""
@@ -47,6 +47,7 @@
     "style-loader": "^3.3.4"
   },
   "dependencies": {
+    "adm-zip": "^0.5.16",
     "electron-squirrel-startup": "^1.0.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
