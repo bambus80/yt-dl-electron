@@ -1,30 +1,35 @@
 import React, { useEffect, useState } from "react";
 import "./index.css";
 
-const DownloadPage = () => {
+type SettingsObject<T extends string | number> = {
+  [key in T]: string;
+};
+type YtDlpMessage = { percent: number }
+
+const DownloadPage: React.FC = () => {
   useEffect(() => {
-    window.yt.onProgress((msg) => {
+    window.yt.onProgress((msg: YtDlpMessage) => {
       setProgress(msg);
     });
-    window.yt.onDone((code) => {
+    window.yt.onDone(() => {
       setIsDownloading(false);
     });
-    window.yt.onError((error) => {
+    window.yt.onError((error: { message: string }) => {
       setProgress(null);
       setIsDownloading(false);
       setError(error.message);
     });
   }, []);
 
-  const [error, setError] = useState(null);
-  const [progress, setProgress] = useState(null);
-  const [isDownloading, setIsDownloading] = useState(false);
-  const [saveMode, setSaveMode] = useState("file");
-  const [url, setUrl] = useState(null);
+  const [error, setError] = useState<string | null>(null);
+  const [progress, setProgress] = useState<YtDlpMessage | null>(null);
+  const [isDownloading, setIsDownloading] = useState<boolean>(false);
+  const [saveMode, setSaveMode] = useState<string>("file");
+  const [url, setUrl] = useState<string | null>(null);
 
-  const [format, setFormat] = useState("default");
-  const [quality, setQuality] = useState("best");
-  const [audioOnly, setAudioOnly] = useState(false);
+  const [format, setFormat] = useState<string>("default");
+  const [quality, setQuality] = useState<string>("best");
+  const [audioOnly, setAudioOnly] = useState<boolean>(false);
 
   useEffect(() => {
     audioOnly ? setFormat("mp3") : setFormat("default");
@@ -36,9 +41,9 @@ const DownloadPage = () => {
       return;
     }
     setError(null);
-    const ytRegex =
+    const ytRegex: RegExp =
       /(?:youtube\.com\/(?:.*v=|v\/|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/;
-    const videoId = url.match(ytRegex)[1];
+    const videoId = url.match(ytRegex);
     if (!videoId) {
       setError("Please enter a valid YouTube URL.");
       return;
@@ -46,7 +51,7 @@ const DownloadPage = () => {
 
     setIsDownloading(true);
     const result = await window.yt.startDownload(
-      videoId,
+      videoId[1] ?? "",
       quality,
       format,
       audioOnly,
@@ -54,12 +59,12 @@ const DownloadPage = () => {
     );
   };
 
-  const saveOptions = {
+  const saveOptions: SettingsObject<string> = {
     file: "File",
     library: "To library",
   };
 
-  const videoQualityOptions = {
+  const videoQualityOptions: SettingsObject<number> = {
     0: "Highest",
     2160: "4K 2160p",
     1440: "HD 1440p",
@@ -71,14 +76,14 @@ const DownloadPage = () => {
     144: "144p",
   };
 
-  const videoFormatOptions = {
+  const videoFormatOptions: SettingsObject<string> = {
     default: "Default",
     webm: "WebM",
     mp4: "MP4",
     mkv: "MKV",
   };
 
-  const audioFormatOptions = {
+  const audioFormatOptions: SettingsObject<string> = {
     mp3: "MP3",
     wav: "Wav",
     flac: "FLAC",
@@ -142,7 +147,7 @@ const DownloadPage = () => {
             >
               {Object.keys(videoQualityOptions).map((key, index) => (
                 <option key={index} value={key}>
-                  {videoQualityOptions[key]}
+                  {videoQualityOptions[key as unknown as number]}
                 </option>
               ))}
             </select>

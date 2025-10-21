@@ -1,15 +1,15 @@
 import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld("yt", {
-  startDownload: (id, quality, format, audioOnly, saveMode) =>
+  startDownload: (id: string, quality: number, format: string, audioOnly: boolean, saveMode: "file" | "library") =>
     ipcRenderer.invoke("yt:startDownload", id, quality, format, audioOnly, saveMode),
-  getVideoInfo: (id) => ipcRenderer.invoke("yt:getVideoInfo", id),
+  getVideoInfo: (id: string) => ipcRenderer.invoke("yt:getVideoInfo", id),
   getYtDlpInfo: () => ipcRenderer.invoke("yt:getYtDlpInfo"),
 
-  onProgress: (callback) =>
+  onProgress: (callback: (args: any) => void) =>
     ipcRenderer.on("yt:downloadProgress", (_event, data) => callback(data)),
-  onDone: (callback) =>
+  onDone: (callback: (args: any) => void) =>
     ipcRenderer.on("yt:downloadDone", (_event, data) => callback(data)),
-  onError: (callback) =>
+  onError: (callback: (args: any) => void) =>
     ipcRenderer.on("yt:downloadError", (_event, data) => callback(data)),
 });

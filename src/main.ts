@@ -1,12 +1,11 @@
-const { app, BrowserWindow } = require('electron');
-const path = require('node:path');
+import { app, BrowserWindow } from 'electron';
 import "./main/ytDlp"
 
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-export let mainWindow = null;
+export let mainWindow: BrowserWindow | null = null;
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({

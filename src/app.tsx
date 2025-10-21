@@ -3,10 +3,11 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import "./index.css";
 
-import DownloadPage from "./components/DownloadPage/index.jsx";
-import LibraryPage from "./components/LibraryPage/index.jsx";
+import DownloadPage from "./components/DownloadPage/index";
+import LibraryPage from "./components/LibraryPage/index";
+import { createRoot } from "react-dom/client";
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <Tabs>
       <TabList>
@@ -26,4 +27,8 @@ const App = () => {
   );
 };
 
-export default App;
+const container = document.getElementById("root");
+if (!container) throw new Error("No root element");
+
+const root = createRoot(container);
+root.render(<App />);

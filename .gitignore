@@ -102,3 +102,13 @@ bin/
 *.wav
 *.flac
 youtu.be/
+
+# TypeScript
+*.tsbuildinfo
+*.d.ts
+!src/types/*.d.ts
+!src/global.d.ts
+*.js.map
+*.jsx.map
+*.ts.map
+*.tsx.map

@@ -1,4 +1,4 @@
-import { app, ipcMain, dialog } from "electron";
+import { app, ipcMain, dialog, BaseWindow } from "electron";
 import { mainWindow } from "../main";
 import YTDlpWrap from "yt-dlp-wrap";
 const path = require("node:path");
@@ -40,7 +40,7 @@ ipcMain.handle(
     console.log("yt-dlp save mode:", saveMode);
     if (saveMode === "file") {
       await dialog
-        .showSaveDialog(mainWindow, {})
+        .showSaveDialog(mainWindow as BaseWindow, {})
         .then((result) => {
           if (result.canceled) error = "Cancelled";
           args = [...args, "-o", `"${result.filePath}.%(ext)s"`];

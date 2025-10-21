@@ -1,6 +1,6 @@
 import React from "react"
 
-const LibraryPage = () => {
+const LibraryPage: React.FC = () => {
     return <h1>Library page</h1>
 }
 
