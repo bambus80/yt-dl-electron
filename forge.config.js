@@ -12,6 +12,8 @@ module.exports = {
       process.platform === "win32"
         ? path.resolve("./bin/ffmpeg.exe")
         : path.resolve("./bin/ffmpeg"),
+      path.resolve("./LICENSES/ffmpeg-LICENSE"),
+      path.resolve("./LICENSES/yt-dlp-LICENSE")
     ],
   },
   rebuildConfig: {},

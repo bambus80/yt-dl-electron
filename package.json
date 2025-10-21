@@ -9,6 +9,7 @@
     "package": "electron-forge package",
     "download-deps": "node scripts/get-deps.js",
     "build": "node scripts/get-deps.js && electron-forge package",
+    "build-no-dl": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\""
